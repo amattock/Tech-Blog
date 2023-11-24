@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const { post } = require('../../models');
+const express = require('express');
+const router = express.Router();
+const { post, user, comment } = require('../../models');
 const authenticated = require('../../utils/auth');
 
-router.post('/', authenticated, async (req, res) => {
+router.post('/post',authenticated, async (req, res) => {
     try {
         const newPost = await post.create({
             ...req.body,
@@ -16,11 +17,12 @@ router.post('/', authenticated, async (req, res) => {
 
 router.put('/:id', authenticated, async (req, res) => {
     try {
-        const postData = await post.update({
-            where: {
-              id: req.params.id,
-            },
-        });
+        const postData = await post.update(
+            // Provide the data to be updated
+            { ...req.body },
+            // Provide the condition
+            { where: { id: req.params.id } }
+        );
 
         if (!postData) {
             res.status(404).json({ message: "No post information found with this id" });
@@ -33,7 +35,7 @@ router.put('/:id', authenticated, async (req, res) => {
     }
 });
 
-router.delete('/:id', authenticated, async (req, res) => {
+router.delete('/:id',authenticated, async (req, res) => {
     try {
         const postData = await post.destroy({
             where: {
@@ -41,12 +43,12 @@ router.delete('/:id', authenticated, async (req, res) => {
             },
         });
 
-    if (!postData) {
-        res.status(404).json({ message: "No post information found with this id" });
-        return;
-    }
+        if (!postData) {
+            res.status(404).json({ message: "No post information found with this id" });
+            return;
+        }
 
-    res.status(200).json(commentData);
+        res.status(200).json(postData);
 
     } catch (err) {
         res.status(500).json(err);

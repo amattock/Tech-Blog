@@ -1,0 +1,225 @@
+<section class="card"
+<div class="card content">
+<div class="media">
+<div class="media-content">
+<p class="title is-4">Sign Up</p>
+</div>
+</div>
+<div class="content">
+<form id="signup-form">
+<div class="field">
+<label class="label">Username</label>
+<div class="control">
+<input id="username-input" class="input" type="text" placeholder="Username" name="username">
+</div>
+
+</div>
+<div class="field">
+<label class="label">Email</label>
+<div class="control">
+<input id="email-input" class="input" type="email" placeholder="Email" name="email">
+</div>
+</div>
+
+<div class="field">
+<label class="label">Password</label>
+<div class="control">
+<input id="password-input" class="input" type="password" placeholder="Password" name="password">
+</div>
+</div>
+
+<div class="field">
+<div class="control">
+<button id="signup-button" class="button is-link">Sign Up</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</section>
+
+<script src = "/public/js/signup.js"></script>
+{{! Compare this snippet from views/home.handlebars: }}
+{{! <h1>Tech post</h1>
+ }}
+{{! <h2>Posts</h2>
+ }}
+{{! {{#each posts}}
+ }}
+{{! <div class="card">
+ }}
+{{!     <div class="card-content">
+ }}
+{{!         <div class="media">
+ }}
+{{!             <div class="media-content">
+ }}
+{{!                 <p class="title is-4">{{title}}</p>
+ }}
+{{!                 <p class="subtitle is-6">{{createdAt}}</p>
+ }}
+{{!             </div>
+ }}
+{{!         </div>
+ }}
+{{!         <div class="content">
+ }}
+{{!             {{body}}
+ }}
+{{!         </div>
+ }}
+{{!     </div>
+ }}
+{{! </div>
+ }}
+{{! {{/each}}
+ }}
+{{! ``` }}
+{{! Compare this snippet from views/createPost.handlebars: }}
+{{! 
+ }}
+{{! <form action="/posts" method="POST">
+ }}
+{{!   <label for="title">Title:</label>
+ }}
+{{!   <input type="text" id="title" name="title" required>
+ }}
+{{! 
+ }}
+{{!   <label for="content">Content:</label>
+ }}
+{{!   <textarea id="content" name="content" required></textarea>
+ }}
+{{! 
+ }}
+{{!   <button type="submit">Create Post</button>
+ }}
+{{! </form>
+ }}
+{{! Compare this snippet from views/post.handlebars: }}
+{{! <section class="card">
+ }}
+{{!     <div class="card-content">
+ }}
+{{!         <div class="media">
+ }}
+{{!             <div class="media-content">
+ }}
+{{!                 <p class="title is-4">{{title}}</p>
+ }}
+{{!                 <p class="subtitle is-6">{{createdAt}}</p>
+ }}
+{{!             </div>
+ }}
+{{!         </div>
+ }}
+{{!         <div class="content">
+ }}
+{{!             {{body}}
+ }}
+{{!         </div>
+ }}
+{{!     </div>
+ }}
+{{! </section>
+ }}
+{{! 
+ }}
+{{! <sc`ript src="/public/js/newPost.js"></script> }}
+{{! Compare this snippet from views/login.handlebars: }}
+{{! <section class="card">
+ }}
+{{!     <
+{{! ``` }}
+{{! Compare this snippet from views/dashboard.handlebars: }}
+{{! <section class="card">
+ }}
+{{!     <div class="card content">
+ }}
+{{!         <div class="media">
+ }}
+{{!             <div class="media-content">
+ }}
+{{!                 <p class="title is-4">Dashboard</p>
+ }}
+{{!             </div>
+ }}
+{{!         </div>
+ }}
+{{!         <div class="content">
+ }}
+{{!             <div class="columns">
+ }}
+{{!                 <div class="column">
+ }}
+{{!                     <div class="card">
+ }}
+{{!                         <div class="card-content">
+ }}
+{{!                             <div class="media">
+ }}
+{{!                                 <div class="media-content">
+ }}
+{{!                                     <p class="title is-4">Create a Post</p>
+ }}
+{{!                                 </div>
+ }}
+{{!                             </div>
+ }}
+{{!                             <div class="content">
+ }}
+{{!                                 <form id="new-post-form">
+ }}
+{{!                                     <div class="field">
+ }}
+{{!                                         <label class="label">Title</label>
+ }}
+{{!                                         <div class="control">
+ }}
+{{!                                             <input id="title-input" class="input" type="text" placeholder="Title" name="title">
+ }}
+{{!                                         </div>
+ }}
+{{!                                     </div>
+ }}
+{{!                                     <div class="field">
+ }}
+{{!                                         <label class="label">Body</label>
+ }}
+{{!                                         <div class="control">
+ }}
+{{!                                             <textarea id="body-input" class="textarea" placeholder="Body" name="body"></textarea>
+ }}
+{{!                                         </div>
+ }}
+{{!                                     </div>
+ }}
+{{!                                     <div class="field">
+ }}
+{{!                                         <div class="control">
+ }}
+{{!                                             <button id="new-post-button" class="button is-link">Create</button>
+ }}
+{{!                                         </div>
+ }}
+{{!                                     </div>
+ }}
+{{!                                 </form>
+ }}
+{{!                             </div>
+ }}
+{{!                         </div>
+ }}
+{{!                     </div>
+ }}
+{{!                 </div>
+ }}
+{{!                 <div class="column">
+ }}
+{{!                     <div class="card">
+ }}
+{{!                         <div class="card-content">
+ }}
+{{!                             <div class="media">
+ }}
+

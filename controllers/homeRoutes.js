@@ -1,143 +1,132 @@
-const router = require('express').Router();
-// const { Model, Names } = require('../models');
-const authenticated = require('../utils/auth');
+const express = require('express');
+const router = express.Router();
 const { post, user, comment } = require('../models');
+const authenticated = require('../utils/auth');
+const sequelize = require('../config/connection');
 
 // GET request for finding all
-router.get('/', /* authenticated, */ async (req, res) => {
-    try {
-        const commentData = await comment.findOne({
-            where: { user_id: 2 },
-        });
-        const userData = await user.findOne({
-            where: { id: 2 },
-        });
-        const postData = await post.findOne({
-            where: { user_id: 2 },
-        });
+// router.get('/',  async (req, res) => {
 
-        const user = userData.get({ plain: true });
-        const comment = commentData.get({ plain: true });
-        const post = postData.map((post) => post.get({ plain: true }));
+//     post.findAll({
+//         where: { user_id: req.session.user_id },
+//         attributes: ['id', 'commentBody', 'date_created', 'post_id', 'user_id'],
+//         include: [
+//             {
+//                 model: comment,
+//                 attributes: ['id', 'commentBody', 'date_created', 'post_id', 'user_id'],
+//                 include: {
+//                     model: user,
+//                     attributes: ['username']
+//                 }
+//             },
+//             {
+//                 model: user,
+//                 attributes: ['username']
+//             }
+//         ]
+//     }).then(postData => {
+//         const posts = postData.map(post => post.get({ plain: true }));
+//         res.render('dashboard', { posts, loggedIn: true });
+//     }).catch(err => {
+//         console.log(err);
+//         res.status(500).json(err);
+//     });
+// }
+// );
+// router.get('/edit/:id', authenticated, (req, res) => {
+//     post.findOne({
+//         where: {
+//             id: req.params.id
+//         },
+//         attributes: ['id', 'commentBody', 'date_created', 'post_id', 'user_id'],
+//         include: [
+//             {
+//                 model: comment,
+//                 attributes: ['id', 'commentBody', 'date_created', 'post_id', 'user_id'],
+//                 include: {
+//                     model: user,
+//                     attributes: ['username']
+//                 }
+//             },
+//             {
+//                 model: user,
+//                 attributes: ['username']
+//             }
+//         ]
+//     }).then(postData => {
+//         if (!postData) {
+//             res.status(404).json({ message: 'No post found with this id' });
+//             return;
+//         }
+//         const post = postData.get({ plain: true });
+//         res.render('edit-post', { post, loggedIn: true });
+//     }).catch(err => {
+//         console.log(err);
+//         res.status(500).json(err);
+//     });
+// });
 
-        res.render('homepage', {
+// module.exports = router;
 
-            ...comment,
-            ...post,
-            ...user,
-            // logged_in: req.session.logged_in
-        });
-    } catch (err) {
-        res.status(500).json(err);
+
+router.get('/', (req, res) => {
+    post.findAll({include: [user]}).then(post => {
+        const hbspost = post.map(post=>post.get({plain:true}))
+        const loggedIn = req.session.user?true:false;
+        res.render('home', {post:hbspost, loggedIn, username:req.session.user?.username})
+    })
+})
+
+router.get("/login",(req,res)=>{
+    if(req.session.user){
+        return res.redirect("/dashboard")
     }
-});
+    res.render("login")
+})
 
-router.get('/workout/:id', /* authenticated, */ async (req, res) => {
-    try {
-        const workoutData = await Workout.findByPk(req.params.id, {
-            /* include anything from other models
-            include: [
-                {
-                    
-                }
-            ]*/
-        });
+router.get("/signup",(req,res)=>{
+    res.render("signup")
+})
 
-        const workout = workoutData.get({ plain: true });
-
-        res.render('workout', {
-            ...workout,
-            // logged_in: req.session.logged_in
-        });
-    } catch (err) {
-        res.status(500).json(err);
+router.get("/dashboard",(req,res)=>{
+    if(!req.session.user) {
+        return res.redirect('/login')
     }
-});
+    User.findByPk(req.session.user.id, {
+        include: [post, Comment]
+    }).then(userData => {
+        const hbsData = userData.get({plain:true})
+        hbsData.loggedIn = req.session.user?true:false
+        res.render("dashboard", hbsData)
+    })
+})
 
-router.get('/hydration/:id',  /* authenticated, */ async (req, res) => {
-    try {
-        const hydrationData = await Hydration.findByPk(req.params.id, {
-            /* include anything from other models
-            include: [
-                {
-                    
-                }
-            ]*/
-        });
-
-        const hydration = hydrationData.get({ plain: true });
-
-        res.render('hydration', {
-            ...hydration,
-            // logged_in: req.session.logged_in
-        });
-    } catch (err) {
-        res.status(500).json(err);
+// SINGLE POST PAGE FUNCTION
+router.get("/post/:id", (req, res) =>{
+    if(!req.session.user) {
+        return res.redirect('/login')
     }
-});
+    post.findByPk(req.params.id,{include:[User, {model: Comment, include: [User]}]})
+    .then(dbpost => {
+        const hbspost = dbpost.get({plain:true})
+        const loggedIn = req.session.user?true:false;
+        console.log('==============')
+        console.log(hbspost)
+        if (dbpost.userId != req.session.user.id) {
+// If not your post -> render comment page over homepage
+            return res.render('comment', {hbspost, loggedIn, username:req.session.user?.username})
+        }
+        // If your post -> render update/delete page over your dashboard
+        res.render("updateDelete", {hbspost, loggedIn, username:req.session.user?.username})
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ msg: "an error occured", err });
+      });
+})
 
-router.get('/calories/:id',  /* authenticated, */ async (req, res) => {
-    try {
-        const caloriesData = await Calorie.findByPk(req.params.id, {
-            /* include anything from other models
-            include: [
-                {
-                    
-                }
-            ]*/
-        });
-
-        const calories = caloriesData.get({ plain: true });
-
-        res.render('calories', {
-            ...calories,
-            // logged_in: req.session.logged_in
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.get('/sleep/:id',  /* authenticated, */ async (req, res) => {
-    try {
-        const sleepData = await Sleep.findByPk(req.params.id, {
-            /* include anything from other models
-            include: [
-                {
-                    
-                }
-            ]*/
-        });
-
-        const sleep = sleepData.get({ plain: true });
-
-        res.render('sleep', {
-            ...sleep,
-            // logged_in: req.session.logged_in
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.get('/sign-up', (req, res) => {
-
-    // if (req.session.logged_in) {
-    //     res.redirect('/');
-    //     return;
-    // }
-
-    res.render('sign-up');
-});
-
-router.get('/login', (req, res) => {
-
-    // if (req.session.logged_in) {
-    //     res.redirect('/');
-    //     return;
-    // }
-
-    res.render('login');
-});
+router.get("*",(req,res)=>{
+    res.redirect("/")
+})
 
 module.exports = router;

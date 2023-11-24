@@ -1,7 +1,8 @@
+const { Sequelize } = require('sequelize');
 const comment = require('./comment');
 const post = require('./post');
 const user = require('./user');
-const sequelize = require('sequelize');
+const sequelize = require('../config/connection'); // Import the sequelize instance
 
 user.hasMany(post, {
     foreignKey: 'user_id',
@@ -34,10 +35,13 @@ comment.belongsTo(post, {
 });
 
 sequelize.sync().then(() => {
-    console.log('Tables have been synced')
-})
-    .catch((err) => {
-        console.log('error syncing database', err)
-    });
+    console.log('Tables have been synced');
+}).catch((err) => {
+    console.log('Error syncing database', err);
+});
 
-module.exports = { comment, post, user };
+module.exports = {
+    comment,
+    post,
+    user,
+};
