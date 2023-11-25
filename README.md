@@ -3,6 +3,8 @@ A CMS style post page using the MVC paradigm in its architectural structure, usi
 
 This is still a work in progress, the signup and posts are not working yet, but the login is working and the dashboard is working as well.
 
+Deployed app link: https://alexscooltechblog-0464e5506955.herokuapp.com
+
 ## Table of Contents
 * [Installation](#installation)
 * [description](#description)
