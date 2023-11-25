@@ -16,13 +16,7 @@ const seedDatabase = async () => {
     console.log('\n----- seeded userData-----\n');
   }
 
-  for (const commentItem of commentData) {
-    await comment.create({
-      ...commentItem,
-      // user_id: users[Math.floor(Math.random() * users.length)].id,
-    });
-    console.log('\n----- seeded commentData-----\n');
-  }
+  
 
   for (const postItem of postData) {
     await post.create({
@@ -30,6 +24,14 @@ const seedDatabase = async () => {
       // user_id: users[Math.floor(Math.random() * users.length)].id,
     });
     console.log('\n----- seeded postData-----\n');
+  }
+  
+  for (const commentItem of commentData) {
+    await comment.create({
+      ...commentItem,
+      // user_id: users[Math.floor(Math.random() * users.length)].id,
+    });
+    console.log('\n----- seeded commentData-----\n');
   }
 
 // const seedDatabase = async () => {

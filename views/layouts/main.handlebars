@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tech Blog</title>
-    {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> --}}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
     <!-- Bulma Version 0.9.0-->
-    {{!-- <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.3/css/bulma.min.css" /> --}}
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link 
+    rel="stylesheet" href="/css/styles.css" 
+    />
 
-</head>
+  </head>
 
-<body>
-
-    <nav class="navbar is-transparent" id="navbar">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="../">
-                Alex Mattocks Tech Blog
-            </a>
-            <div class="content has-text-centered" data-target="navbarMenu">
-                <a class="navbar-item is-active" href="/">
-                    Home
-                </a>
-                <a class="navbar-item">
-                    Dashboard
-                </a>
-                {{#if logged_in}}
-                <a class="navbar-item" id="logout">
-                    Logout
-                </a>
-                {{else}}
-                <a class="navbar-item" href="/login">
-                    Login
-                </a>
-                <a class="navbar-item" href="/signup">
-                    Sign Up
-                </a>
-                {{/if}}
-            </div>
-        </div>
+  <body>
+    {{! Nav bar that goes on every page }}
+    <nav id="navbar">
+      <ul id="navbar-ul">
+        <li>
+          <button><a class="link" href="/">Home</a></button>
+        </li>
+        {{#if loggedIn}}
+          <li>
+            <button><a class="link" href="/dashboard">Dashboard</a></button>
+          </li>
+          <li>
+            <button id="logout"><a class="link" href="/logout">Logout</a></button>
+          </li>
+        {{else}}
+          <li>
+            <button><a class="link" href="/login">Login</a></button>
+          </li>
+          <li>
+            <button><a class="link" href="/signup">Signup</a></button>
+          </li>
+        {{/if}}
+      </ul>
+      <div id="tech-blog-box">
+        <h1 id="nav-header"><a class="link" href="/">The Tech Blog</a></h1>
+      </div>
     </nav>
 
     {{{body}}}
-
-    <footer class="footer">
-        <div class="container">
-            <div class="content has-text-centered">
-                <p>
-                    <strong>Tech Blog</strong> by <a href="https://github.com/amattock/Tech-Blog">Alex Mattock</a>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-
-</body>
+ 
+ 
+ 
+  </body>
+  
+   <script src="/js/logout.js"></script>
+ 
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p class="footer">
+          <strong>Tech Blog</strong>
+          by
+          <a href="https://github.com/amattock/Tech-Blog">Alex Mattock</a>
+        </p>
+      </div>
+    </div>
+  </footer>
 
 </html>
-
-

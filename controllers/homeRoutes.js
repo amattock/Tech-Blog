@@ -84,22 +84,7 @@ router.get("/login",(req,res)=>{
     res.render("login")
 })
 
-router.get("/signup",(req,res)=>{
-    res.render("signup")
-})
 
-router.get("/dashboard",(req,res)=>{
-    if(!req.session.user) {
-        return res.redirect('/login')
-    }
-    User.findByPk(req.session.user.id, {
-        include: [post, Comment]
-    }).then(userData => {
-        const hbsData = userData.get({plain:true})
-        hbsData.loggedIn = req.session.user?true:false
-        res.render("dashboard", hbsData)
-    })
-})
 
 // SINGLE POST PAGE FUNCTION
 router.get("/post/:id", (req, res) =>{
